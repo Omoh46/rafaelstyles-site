@@ -44,8 +44,7 @@ Then open `http://localhost:8000/`.
 
 This repo is deployed to GitHub Pages from the `main` branch, `/` (root).
 
-Live URL: **https://<github-username>.github.io/rafaelstyles-site/**
-(placeholder until this README is updated post-deploy with the confirmed URL)
+Live URL: **https://omoh46.github.io/rafaelstyles-site/**
 
 ## Connecting the custom domain (rafaelstyles.com) — do this once GoDaddy Delegate Access arrives
 
@@ -59,7 +58,7 @@ This part cannot be automated from here — it requires someone with delegate ac
      - `185.199.111.153`
    - **CNAME record** for the `www` subdomain:
      - Host: `www`
-     - Points to: `<github-username>.github.io`
+     - Points to: `omoh46.github.io`
 2. **In the GitHub repo settings → Pages**, set the custom domain to `rafaelstyles.com` and enable **Enforce HTTPS** once GitHub finishes issuing the certificate (can take a few minutes to a few hours after DNS propagates).
 3. Add a `CNAME` file to the repo root containing exactly `rafaelstyles.com` (GitHub does this automatically when you set the custom domain in the Pages settings UI — no manual step needed if done that way).
 4. DNS propagation can take up to 24–48 hours. Verify with `dig rafaelstyles.com` once added.
