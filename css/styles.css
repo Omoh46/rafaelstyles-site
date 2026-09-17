@@ -256,8 +256,21 @@ button { font-family: inherit; }
     transform: translateY(0);
     pointer-events: auto;
   }
-  .nav-links a { padding: 0.9em 0; border-bottom: 1px solid rgba(212,175,55,0.12); }
-  .nav-links .btn { margin-top: 0.85em; text-align: center; justify-content: center; border-bottom: none; }
+  .nav-links a {
+    display: block;
+    width: 100%;
+    padding: 0.9em 0;
+    border-bottom: 1px solid rgba(212,175,55,0.12);
+  }
+  .nav-links a::after { bottom: -1px; }
+  .nav-links .btn {
+    display: inline-flex;
+    width: auto;
+    margin-top: 0.85em;
+    text-align: center;
+    justify-content: center;
+    border-bottom: none;
+  }
 }
 
 /* ---------- Hero ---------- */
