@@ -10,6 +10,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Tangerine:wght@700&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<script>document.documentElement.classList.add("js");</script>
 <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
@@ -39,36 +40,25 @@
 
 <main id="main">
 
-  <!-- ===================== HERO ===================== -->
-  <section class="hero">
-    <button class="emblem-gate" type="button" aria-label="Enter the Rafael Styles site">
-      <img src="assets/logo_emblem.png" alt="Rafael Styles gold emblem" width="912" height="848">
-      <span class="emblem-cue">Tap or scroll to enter</span>
-    </button>
+  <!-- ===================== FULLSCREEN INTRO ===================== -->
+  <div class="intro" id="intro" role="button" tabindex="0" aria-label="Enter the Rafael Styles site">
+    <img class="intro-emblem" src="assets/logo_emblem.png" alt="Rafael Styles gold emblem" width="912" height="848">
+    <span class="intro-wordmark">Rafael Styles</span>
+    <span class="intro-tagline">Mobile Luxury Blowouts &amp; More</span>
+    <span class="intro-cue" aria-hidden="true">Scroll or tap to enter</span>
+  </div>
 
-    <div class="hero-reveal">
-      <div class="hero-copy">
-        <span class="eyebrow">The Mobile Atelier</span>
-        <h1>Welcome to the Red Carpet</h1>
-        <p>Exhausted by the endless, chaotic routine of battling traffic, hunting for parking, and sitting in a loud, crowded blowout bar just to get a standard style?</p>
-        <p>Welcome to the private luxury of your own space. Rafael delivers red carpet salon luxury directly to your doorstep, tailored flawlessly for your essential weekly maintenance or your most special events, sure to leave you effortlessly glamorous.</p>
-        <p>This is not a traditional appointment, it is a private styling experience curated entirely around your lifestyle. Explore our interactive lookbook catalog below, select your signature canvas finish, and tap any catalog page to seamlessly reserve your chair.</p>
-        <div class="hero-cta">
-          <a class="btn btn-solid" href="lookbook.html">Explore the Lookbook</a>
-          <a class="btn" href="https://rafaelstyles.glossgenius.com" target="_blank" rel="noopener noreferrer">Reserve Your Chair<span class="visually-hidden"> (opens GlossGenius booking in a new tab)</span></a>
-        </div>
-      </div>
-      <div class="hero-photo placeholder-slot" role="img" aria-label="Placeholder: Rafael Styles catalog styled on a coffee table in a luxurious living space, photo pending from client">
-        <span class="placeholder-label">
-          <svg class="placeholder-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" aria-hidden="true">
-            <rect x="2.5" y="6" width="19" height="14" rx="2"/>
-            <circle cx="12" cy="13" r="3.6"/>
-            <path d="M8 6l1.4-2.2h5.2L16 6"/>
-          </svg>
-          <span class="placeholder-title">Lifestyle Photo Coming Soon</span>
-          <span class="placeholder-dims">Catalog on coffee table &middot; living space &middot; 4:5</span>
-        </span>
-      </div>
+  <!-- ===================== HERO (SPLIT SCREEN) ===================== -->
+  <section class="hero split-frame" aria-labelledby="hero-heading">
+    <div class="hero-copy">
+      <span class="eyebrow">The Mobile Atelier</span>
+      <h1 id="hero-heading">Welcome to the Red Carpet</h1>
+      <p>Exhausted by the endless, chaotic routine of battling traffic, hunting for parking, and sitting in a loud, crowded blowout bar just to get a standard style?</p>
+      <p>Welcome to the private luxury of your own space. Rafael delivers red carpet salon luxury directly to your doorstep, tailored flawlessly for your essential weekly maintenance or your most special events, sure to leave you effortlessly glamorous.</p>
+      <p>This is not a traditional appointment, it is a private styling experience curated entirely around your lifestyle. Explore our interactive lookbook catalog below, select your signature canvas finish, and tap any catalog page to seamlessly reserve your chair.</p>
+    </div>
+    <div class="hero-photo">
+      <img src="assets/hero_living_room_book_reference.jpg" alt="A moody black-and-gold living room: velvet armchairs, gold satin drapes, and a dark leather Rafael Styles catalog with a gold emblem resting on a gold coffee table" width="1165" height="773">
     </div>
   </section>
 
@@ -77,7 +67,7 @@
     <div class="container section-head">
       <span class="eyebrow">About the Artist</span>
       <h2>Rafael Styles: The Mobile Atelier</h2>
-      <p class="lede">Since 2011, Rafael&rsquo;s artistry has taken him from Elizabeth Arden&rsquo;s Red Door Spas to Drybar&rsquo;s original Chicago launch team, and years by the side of Vivian Arpino, Oprah Winfrey&rsquo;s longtime stylist. Today he brings that same red carpet precision straight to your door.</p>
+      <p class="lede">Before bringing his luxury hair design directly to your door, Rafael spent over a decade styling for Chicago&rsquo;s most exclusive circles. From mastering the perfect blowout at the city&rsquo;s top beauty landmarks to directing artistry for celebrity salon brands, his background is rooted in pure prestige. Step inside his story.</p>
       <div class="ornament"><span class="ornament-glyph" aria-hidden="true">&#10022;</span></div>
       <a class="btn btn-solid" href="about.html">Read Rafael&rsquo;s Full Story</a>
     </div>
@@ -91,6 +81,92 @@
       <p class="lede">Mobile hair services, artisanal enhancements, and companion experiences, each curated as its own catalog page. Category and service names only, every detail lives in the lookbook.</p>
       <div class="ornament"><span class="ornament-glyph" aria-hidden="true">&#10022;</span></div>
       <a class="btn btn-solid" href="lookbook.html">View the Full Lookbook</a>
+    </div>
+  </section>
+
+  <!-- ===================== FLIP-BOOK ===================== -->
+  <section class="section satin-bg flipbook-section" aria-labelledby="flipbook-heading">
+    <div class="container">
+      <h2 class="visually-hidden" id="flipbook-heading">The Rafael Styles Catalog</h2>
+      <div class="flipbook" id="flipbook" data-state="closed" data-total="6">
+
+        <button class="book-cover" type="button" aria-expanded="false" aria-controls="book-reader">
+          <span class="book-back" aria-hidden="true"></span>
+          <span class="book-front" aria-hidden="true">
+            <span class="book-corner tl"></span><span class="book-corner tr"></span><span class="book-corner bl"></span><span class="book-corner br"></span>
+            <img src="assets/logo_emblem.png" alt="" width="912" height="848">
+          </span>
+          <span class="book-shadow" aria-hidden="true"></span>
+          <span class="book-cue">Tap to open<span class="visually-hidden"> the Rafael Styles catalog</span></span>
+        </button>
+
+        <div class="book-reader" id="book-reader" hidden>
+          <header class="book-masthead">
+            <span class="masthead-name">Rafael Styles</span>
+            <span class="masthead-sub">A private styling experience, one page at a time.</span>
+          </header>
+          <div class="book-spread">
+            <button class="book-photo placeholder-slot" type="button" aria-label="Turn the page">
+              <span class="page-counter" aria-hidden="true"><span class="pc-current">01</span>/<span class="pc-total">06</span></span>
+              <span class="placeholder-label">
+                <svg class="placeholder-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" aria-hidden="true"><rect x="2.5" y="6" width="19" height="14" rx="2"/><circle cx="12" cy="13" r="3.6"/><path d="M8 6l1.4-2.2h5.2L16 6"/></svg>
+                <span class="placeholder-title">Photo Coming Soon</span>
+              </span>
+              <span class="turn-cue" aria-hidden="true">Tap to turn</span>
+            </button>
+            <div class="book-text" aria-live="polite">
+            <article class="book-page" data-page="0">
+              <h3>The Red Carpet Arrives</h3>
+              <span class="gold-rule" aria-hidden="true"></span>
+              <p class="book-page-lede">Red carpet salon luxury, delivered directly to your doorstep.</p>
+              <p>Rafael brings the atelier to you, so the only thing left to plan is what you will wear.</p>
+            </article>
+            <article class="book-page" data-page="1" hidden>
+              <h3>Your Own Space</h3>
+              <span class="gold-rule" aria-hidden="true"></span>
+              <p class="book-page-lede">No traffic, no parking, no crowded blowout bar.</p>
+              <p>A private styling experience curated entirely around your lifestyle, in the comfort of your own home.</p>
+            </article>
+            <article class="book-page" data-page="2" hidden>
+              <h3>Signature Canvas Finishes</h3>
+              <span class="gold-rule" aria-hidden="true"></span>
+              <p class="book-page-lede">Every look begins with your hair&rsquo;s length, density, and texture.</p>
+              <p>Browse the lookbook, choose the finish that feels like you, and let the artistry follow.</p>
+            </article>
+            <article class="book-page" data-page="3" hidden>
+              <h3>Weekly Maintenance</h3>
+              <span class="gold-rule" aria-hidden="true"></span>
+              <p class="book-page-lede">Effortlessly polished, week after week.</p>
+              <p>Essential weekly upkeep, tailored flawlessly so you always leave feeling glamorous.</p>
+            </article>
+            <article class="book-page" data-page="4" hidden>
+              <h3>Special Events</h3>
+              <span class="gold-rule" aria-hidden="true"></span>
+              <p class="book-page-lede">For the moments that call for a red carpet.</p>
+              <p>Your most special occasions deserve a finish that photographs as beautifully as it feels.</p>
+            </article>
+            <article class="book-page" data-page="5" hidden>
+              <h3>Reserve Your Chair</h3>
+              <span class="gold-rule" aria-hidden="true"></span>
+              <p class="book-page-lede">Your private styling experience awaits.</p>
+              <p>When you are ready, choose Reserve in the menu above and select your experience.</p>
+            </article>
+            </div>
+          </div>
+          <button class="book-close" type="button">Close the book</button>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== BESPOKE SCHEDULING ===================== -->
+  <section class="section section-black scheduling-section">
+    <div class="container">
+      <div class="about-note">
+        <strong>Bespoke Scheduling &amp; Future Reservations</strong>
+        <p>Our digital calendar opens in fixed blocks. For future reservations, advanced event planning, or custom scheduling requests outside of displayed calendar hours, please contact <a href="mailto:rafaelstyles@yahoo.com">rafaelstyles@yahoo.com</a> directly. All private mobile bookings are managed exclusively through this digital portal.</p>
+      </div>
     </div>
   </section>
 
@@ -117,7 +193,7 @@
         <h4>Connect</h4>
         <ul>
           <li><a href="https://instagram.com/rafaelstyles.co" target="_blank" rel="noopener noreferrer">Instagram @rafaelstyles.co</a></li>
-          <li><a href="https://facebook.com/rafaelstyles" target="_blank" rel="noopener noreferrer">Facebook @rafaelstyles</a></li>
+          <li><a href="https://facebook.com/RafaelStylesLLC" target="_blank" rel="noopener noreferrer">Facebook @RafaelStylesLLC</a></li>
           <li><a href="mailto:rafaelstyles@yahoo.com">rafaelstyles@yahoo.com</a></li>
         </ul>
       </div>
