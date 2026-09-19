@@ -125,7 +125,12 @@
     controls.innerHTML =
       '<button type="button" class="carousel-btn" data-dir="-1" aria-label="Previous look">' + chevron(-1) + "</button>" +
       '<button type="button" class="carousel-btn" data-dir="1" aria-label="Next look">' + chevron(1) + "</button>";
-    track.parentNode.insertBefore(controls, track.nextSibling);
+    /* Arrows live in a wrapper so they can sit either side of the centred card. */
+    var wrap = document.createElement("div");
+    wrap.className = "carousel-wrap";
+    track.parentNode.insertBefore(wrap, track);
+    wrap.appendChild(track);
+    wrap.appendChild(controls);
 
     var centeredIndex = function () {
       var mid = track.scrollLeft + track.clientWidth / 2;

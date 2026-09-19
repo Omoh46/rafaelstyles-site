@@ -10,7 +10,8 @@
   --gold: #D4AF37;
   --gold-bright: #f0cf6b;
   --gold-dim: #8a7226;
-  --hairline: rgba(212, 175, 55, 0.28);
+  --gold-trim: #B77924; /* sampled from gold_velvet_tray reference; matches the velvet textures */
+  --hairline: rgba(183, 121, 36, 0.45);
   --text: #f3efe4;
   --text-muted: #c9c3b3;
   --font-display: "Cormorant Garamond", "Playfair Display", Georgia, serif;
@@ -338,15 +339,14 @@ button { font-family: inherit; }
 /* ---------- Hero: split screen ---------- */
 .hero {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  min-height: calc(100svh - var(--nav-height));
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   background: var(--black);
 }
 .hero-copy {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: clamp(2.5rem, 6vw, 5.5rem) clamp(1.5rem, 5vw, 4.5rem);
+  padding: clamp(1.75rem, 3.2vw, 3rem) clamp(1.5rem, 5vw, 4.5rem);
   max-width: 640px;
   margin-left: auto; /* keeps copy hugging the centre line on very wide screens */
 }
@@ -358,29 +358,35 @@ button { font-family: inherit; }
 }
 .hero-copy p { color: var(--text-muted); font-size: 1.02rem; }
 .hero-copy p:last-of-type { color: var(--text); margin-bottom: 0; }
-.hero-photo { position: relative; min-height: 340px; overflow: hidden; }
+/* Desktop: exact half width; row height follows the (tightened) copy column so the crop stays mild */
+.hero-photo { position: relative; overflow: hidden; min-height: 460px; }
 .hero-photo img {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: 50% 60%;
+  object-position: 50% 50%; /* centred: left armrest, both chairs' inner edges and the book stay in frame */
 }
 
 /* Fine metallic gold hairline framing any two-block split against black */
 .split-frame {
-  border-top: 1px solid var(--gold);
-  border-bottom: 1px solid var(--gold);
+  border-top: 1px solid var(--gold-trim);
+  border-bottom: 1px solid var(--gold-trim);
 }
-.split-frame > * + * { border-left: 1px solid var(--gold); }
+.split-frame > * + * { border-left: 1px solid var(--gold-trim); }
+
+@media (min-width: 901px) and (max-width: 1240px) {
+  .hero-photo img { object-position: 28% 50%; } /* narrower half-width crops harder; bias toward the left armrest */
+}
 
 @media (max-width: 900px) {
-  .hero { grid-template-columns: 1fr; min-height: 0; }
+  .hero { grid-template-columns: 1fr; }
   .hero-photo { order: -1; min-height: 0; aspect-ratio: 4 / 3; }
+  .hero-photo img { object-position: 50% 60%; }
   .hero-copy { max-width: none; margin: 0; }
   .split-frame > * + * { border-left: 0; }
-  .split-frame > .hero-copy { border-top: 1px solid var(--gold); }
+  .split-frame > .hero-copy { border-top: 1px solid var(--gold-trim); }
 }
 
 .placeholder-slot {
@@ -448,8 +454,8 @@ button { font-family: inherit; }
   gap: clamp(2rem, 5vw, 4rem);
   align-items: start;
 }
-.about-grid.split-frame { gap: 0; border: 1px solid var(--gold); align-items: stretch; }
-.about-grid.split-frame > * + * { border-left: 1px solid var(--gold); }
+.about-grid.split-frame { gap: 0; border: 1px solid var(--gold-trim); align-items: stretch; }
+.about-grid.split-frame > * + * { border-left: 1px solid var(--gold-trim); }
 .about-grid.split-frame .about-body { padding: clamp(1.5rem, 4vw, 3rem); }
 .about-portrait.placeholder-slot { aspect-ratio: 3 / 4; border: 0; border-radius: 0; }
 .about-body h3 { color: var(--gold); font-size: clamp(1.4rem, 3vw, 1.9rem); }
@@ -466,7 +472,7 @@ button { font-family: inherit; }
 @media (max-width: 860px) {
   .about-grid { grid-template-columns: 1fr; }
   .about-portrait.placeholder-slot { aspect-ratio: 16 / 10; }
-  .about-grid.split-frame > * + * { border-left: 0; border-top: 1px solid var(--gold); }
+  .about-grid.split-frame > * + * { border-left: 0; border-top: 1px solid var(--gold-trim); }
 }
 
 /* ---------- Lookbook ---------- */
@@ -730,13 +736,13 @@ button { font-family: inherit; }
   .card-grid .lookbook-card:hover { transform: none; }
   .card-grid .lookbook-card.is-centered:hover { box-shadow: 0 18px 40px rgba(0,0,0,0.5); }
 
-  .carousel-controls {
-    display: flex;
-    justify-content: center;
-    gap: 1rem;
-    margin-top: 0.5rem;
-  }
+  .carousel-wrap { position: relative; }
+  .carousel-controls { display: block; }
   .carousel-btn {
+    position: absolute;
+    z-index: 5;
+    top: calc(50% - 0.75rem); /* track padding is 0.5rem top / 2rem bottom */
+    margin-top: -23px;
     width: 46px; height: 46px;
     border-radius: 50%;
     border: 1px solid var(--gold);
@@ -746,6 +752,8 @@ button { font-family: inherit; }
     display: inline-flex; align-items: center; justify-content: center;
     transition: background 0.3s var(--ease), color 0.3s var(--ease);
   }
+  .carousel-btn[data-dir="-1"] { left: calc(50% - 190px - 72px); }
+  .carousel-btn[data-dir="1"] { right: calc(50% - 190px - 72px); }
   .carousel-btn:hover, .carousel-btn:focus-visible { background: var(--gold); color: var(--black); }
   .carousel-btn svg { width: 18px; height: 18px; }
 }
@@ -794,7 +802,8 @@ button { font-family: inherit; }
   box-shadow: inset 0 0 0 7px #0a0807, inset 0 0 0 8px rgba(212,175,55,0.5), -6px 0 0 -1px #000, 0 20px 30px rgba(0,0,0,0.55);
   transform: rotate(-4deg);
 }
-.book-front img { width: 78%; height: auto; mix-blend-mode: screen; /* PNG has an opaque black ground */ }
+.book-front { overflow: hidden; }
+.book-front img { width: 122%; max-width: none; height: auto; mix-blend-mode: screen; /* PNG has an opaque black ground */ }
 .book-corner {
   position: absolute; width: 22px; height: 22px;
   border: 0 solid var(--gold);
@@ -811,7 +820,13 @@ button { font-family: inherit; }
 }
 .book-cue {
   position: absolute;
-  left: 0; right: 0; bottom: -3.1rem;
+  left: 50%; bottom: -3.4rem;
+  transform: translateX(-50%);
+  white-space: nowrap;
+  padding: 0.45em 1.1em;
+  background: rgba(0,0,0,0.7);
+  border: 1px solid var(--gold-trim);
+  border-radius: 999px;
   text-align: center;
   font-size: 0.72rem;
   letter-spacing: 0.3em;
@@ -823,7 +838,7 @@ button { font-family: inherit; }
 .book-reader {
   width: min(100%, 560px);
   background: rgba(0,0,0,0.88);
-  border: 1px solid var(--gold);
+  border: 1px solid var(--gold-trim);
   border-radius: 4px;
   padding: clamp(1.25rem, 4vw, 2rem);
   box-shadow: 0 24px 60px rgba(0,0,0,0.6);
@@ -896,3 +911,30 @@ button { font-family: inherit; }
 }
 .book-close:hover, .book-close:focus-visible { color: var(--gold); }
 .flipbook[data-state="open"] .book-cover { display: none; }
+
+
+/* ---------- Flip-book surface: the client's velvet + gold tray photo ---------- */
+.flipbook-surface {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  background: var(--black);
+  padding-block: clamp(3rem, 7vw, 5rem);
+}
+.flipbook-surface::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: url("../assets/flipbook-velvet-tray.jpg") center 55% / cover no-repeat;
+  /* feather every edge into the surrounding black so it reads as an extension of the photo */
+  -webkit-mask-image: radial-gradient(ellipse 72% 78% at 50% 50%, #000 42%, transparent 100%);
+  mask-image: radial-gradient(ellipse 72% 78% at 50% 50%, #000 42%, transparent 100%);
+}
+.flipbook-surface::after { /* gentle vignette keeps the reading view legible */
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: radial-gradient(ellipse at 50% 50%, transparent 35%, rgba(0,0,0,0.35) 100%);
+}
