@@ -930,3 +930,22 @@ button { font-family: inherit; }
   z-index: -1;
   background: radial-gradient(ellipse at 50% 50%, transparent 35%, rgba(0,0,0,0.35) 100%);
 }
+
+
+/* ---------- Flip-book surface: mobile only (desktop rules above are untouched) ---------- */
+@media (max-width: 900px) {
+  /* Brighter, more vibrant velvet + gold, closer to the hero photo's tone */
+  .flipbook-surface::before {
+    background-position: center 42%;
+    filter: brightness(1.3) saturate(1.05) contrast(1.05);
+    -webkit-mask-image: radial-gradient(ellipse 120% 105% at 50% 50%, #000 62%, transparent 100%);
+    mask-image: radial-gradient(ellipse 120% 105% at 50% 50%, #000 62%, transparent 100%);
+  }
+  .flipbook-surface::after { background: none; }
+  /* The peeking back cover: a deep, muted bronze-brown leather instead of saturated crimson */
+  .book-back {
+    background: linear-gradient(135deg, #4a2a14, #26130a);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.55), inset 0 0 0 1px rgba(183,121,36,0.35);
+    transform: rotate(4deg) translate(10px, 5px);
+  }
+}
