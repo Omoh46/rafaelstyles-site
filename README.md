@@ -7,7 +7,7 @@ Static HTML/CSS/JS marketing site for **Rafael Styles** (mobile luxury hair blow
 ```
 index.html      Home — emblem-fade hero, verbatim hero copy, About/The Artist section
 lookbook.html   Lookbook Menu — accordion service cards with parallax texture, 3 categories
-policies.html   Policies & Covenant — the single, verbatim copy of the public policy text
+policies.html   Terms and Conditions — the single, verbatim copy of the public policy text
 css/styles.css  Design system (black #000000 / gold #D4AF37)
 js/main.js      Nav toggle, emblem-gate dismissal, accessible accordion, parallax scroll
 assets/         logo_emblem.png + generated favicons
@@ -17,7 +17,7 @@ assets/         logo_emblem.png + generated favicons
 
 - **No prices or durations anywhere.** Pricing lives exclusively in GlossGenius.
 - All "Reserve" links point to `https://rafaelstyles.glossgenius.com` (outbound only — no GlossGenius config here).
-- The Section 3.5 policy covenant appears **once**, in full, on `policies.html`. The footer on every page only links to it.
+- The Section 3.5 policy text (Terms and Conditions) appears **once**, in full, on `policies.html`. The footer on every page only links to it.
 - Hero and About copy are reproduced verbatim from the build brief.
 
 ## Placeholder photography
