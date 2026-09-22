@@ -309,7 +309,15 @@ button { font-family: inherit; }
   width: auto;
   height: auto;
   max-width: min(80vw, 520px);
-  max-height: min(64svh, 720px);
+  max-height: min(58svh, 640px);
+}
+.intro-tagline { /* same treatment as the sticky nav's .brand-sub */
+  font-size: 0.58rem;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-top: 0.5rem; /* a touch more than the original 0.25rem: the art's own baked-in slogan
+    now sits right above it, so this keeps the two from reading as crowded together */
 }
 .intro-cue {
   margin-top: 2.25rem;
