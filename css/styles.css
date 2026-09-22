@@ -922,7 +922,7 @@ button { font-family: inherit; }
   font-size: 1.05rem;
   color: var(--text-muted);
 }
-.page-counter, .turn-cue {
+.page-counter {
   position: absolute;
   z-index: 5;
   font-family: var(--font-body);
@@ -933,17 +933,8 @@ button { font-family: inherit; }
   background: rgba(0,0,0,0.7);
   padding: 0.35em 0.75em;
   border-radius: 999px;
+  top: 0.75rem; left: 0.75rem;
 }
-.page-counter { top: 0.75rem; left: 0.75rem; }
-.turn-cue {
-  bottom: 0.75rem; right: 0.75rem;
-  border: 1px solid var(--gold-trim);
-  cursor: pointer;
-  font: inherit;
-  letter-spacing: 0.2em; /* button reset can drop the inherited tracking, so restate it */
-  transition: background 0.3s var(--ease), color 0.3s var(--ease);
-}
-.turn-cue:hover, .turn-cue:focus-visible { background: var(--gold); color: var(--black); }
 
 /* ---------- Book pages: two templates sliding in a shared track ---------- */
 .book-spread { position: relative; }
@@ -952,14 +943,12 @@ button { font-family: inherit; }
   overflow: hidden;
   min-height: 11.5rem;
   padding-top: 2.5rem; /* clears the page-counter pill floating above */
-  padding-bottom: 3.75rem; /* clears the turn-cue pill floating below, so page copy never sits under it, even wrapped over several lines on narrow viewports */
 }
 .book-unit[hidden] { display: none; }
 .book-unit.is-outgoing, .book-unit.is-incoming {
   position: absolute;
   top: 0; left: 0; right: 0;
   padding-top: 2.5rem;
-  padding-bottom: 3.75rem;
   transition: transform 0.45s var(--ease);
 }
 @media (prefers-reduced-motion: reduce) {

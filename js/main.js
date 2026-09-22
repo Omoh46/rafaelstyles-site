@@ -234,7 +234,6 @@
     var track = document.getElementById("book-track");
     var units = Array.prototype.slice.call(track.querySelectorAll(".book-unit"));
     var counter = reader.querySelector(".pc-current");
-    var turnBtn = reader.querySelector(".turn-cue");
     var closeBtn = reader.querySelector(".book-close");
     var prevBtn = reader.querySelector(".book-nav-prev");
     var nextBtn = reader.querySelector(".book-nav-next");
@@ -246,8 +245,10 @@
 
     navTotal.textContent = ("0" + total).slice(-2);
 
+    /* The turn-cue button used to carry this label; Next has taken over as the primary
+       accessible "advance" control, so it now gets the dynamic page-position announcement. */
     var describe = function (p) {
-      turnBtn.setAttribute("aria-label", "Turn the page (page " + (p + 1) + " of " + total + ")");
+      nextBtn.setAttribute("aria-label", "Next page (currently page " + (p + 1) + " of " + total + ")");
     };
 
     var settle = function (unit) {
@@ -312,7 +313,10 @@
       counter.textContent = "01";
       navCurrent.textContent = "01";
       describe(0);
-      turnBtn.focus({ preventScroll: true });
+      /* Focus moves to Next, not cover: cover is hidden by the .flipbook[data-state="open"] rule
+         the instant book.dataset.state flips above, so focusing it here would silently land
+         nowhere. Next is now the primary accessible control that used to be the turn-cue button. */
+      nextBtn.focus({ preventScroll: true });
     };
     var close = function () {
       book.dataset.state = "closed";
@@ -323,13 +327,12 @@
 
     cover.addEventListener("click", open);
     closeBtn.addEventListener("click", close);
-    turnBtn.addEventListener("click", function () { show(page + 1, 1); });
     /* The book wraps at both ends (see the modulo in show() above), so Prev/Next are always
        active — neither is ever disabled on the first or last page. */
     prevBtn.addEventListener("click", function () { show(page - 1, -1); });
     nextBtn.addEventListener("click", function () { show(page + 1, 1); });
     /* Click anywhere else on the open spread also advances, matching the old "tap the photo to
-       turn" feel, but real controls (the closing page's Reserve link, the turn button itself)
+       turn" feel, but real controls (the closing page's Reserve link, the Prev/Next buttons)
        handle their own clicks and never trigger a page turn underneath them. */
     spread.addEventListener("click", function (e) {
       if (e.target.closest("a, button")) return;
