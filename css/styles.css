@@ -936,8 +936,12 @@ button { font-family: inherit; }
   top: 0.75rem; left: 0.75rem;
 }
 
-/* ---------- Book pages: two templates sliding in a shared track ---------- */
-.book-spread { position: relative; }
+/* ---------- Book pages: two templates, turning on a 3D hinge in a shared track ---------- */
+.book-spread {
+  position: relative;
+  perspective: 1500px;
+  -webkit-perspective: 1500px;
+}
 .book-track {
   position: relative;
   overflow: hidden;
@@ -945,14 +949,87 @@ button { font-family: inherit; }
   padding-top: 2.5rem; /* clears the page-counter pill floating above */
 }
 .book-unit[hidden] { display: none; }
-.book-unit.is-outgoing, .book-unit.is-incoming {
+
+/* The page underneath: sits flat, no rotation, revealed once the turning page's
+   backface hides past 90°. */
+.book-unit.is-under,
+.book-unit.is-turning {
+  background: #0a0705; /* opaque "paper" — without this the stacked layer beneath shows through
+    in every gap between glyphs, since both sit at the exact same position during the turn */
+}
+.book-unit.is-under {
   position: absolute;
   top: 0; left: 0; right: 0;
   padding-top: 2.5rem;
-  transition: transform 0.45s var(--ease);
+  z-index: 1;
+}
+
+/* The page actually turning. Forward hinges on its LEFT edge (spine), rotating away from
+   0deg to -180deg; backward hinges on the RIGHT edge, unfolding from 180deg back to 0deg —
+   a mirrored motion rather than the same animation reversed, so it reads as "undoing" a turn
+   rather than a different effect. backface-visibility hides the mirrored/blank reverse of the
+   page through the invisible 90deg-270deg arc, which is what reveals .is-under beneath it. */
+.book-unit.is-turning {
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  padding-top: 2.5rem;
+  z-index: 2;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  box-shadow: 0 14px 34px rgba(0, 0, 0, 0.55);
+}
+.book-unit.is-turning::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0;
+}
+.book-unit.is-turning.turn-fwd {
+  transform-origin: left center;
+  animation: book-turn-fwd 0.75s cubic-bezier(0.45, 0, 0.55, 1) forwards;
+}
+.book-unit.is-turning.turn-fwd::after {
+  /* Darkest right at the spine, fading toward the free edge — a fold shadow, not a flat tint. */
+  background:
+    linear-gradient(to right, rgba(0,0,0,0.62) 0%, rgba(0,0,0,0.2) 30%, transparent 58%),
+    linear-gradient(to right, rgba(212,175,55,0.2) 0%, transparent 7%);
+  animation: book-turn-shadow 0.75s cubic-bezier(0.45, 0, 0.55, 1) forwards;
+}
+.book-unit.is-turning.turn-back {
+  transform-origin: right center;
+  animation: book-turn-back 0.75s cubic-bezier(0.45, 0, 0.55, 1) forwards;
+}
+.book-unit.is-turning.turn-back::after {
+  background:
+    linear-gradient(to left, rgba(0,0,0,0.62) 0%, rgba(0,0,0,0.2) 30%, transparent 58%),
+    linear-gradient(to left, rgba(212,175,55,0.2) 0%, transparent 7%);
+  animation: book-turn-shadow 0.75s cubic-bezier(0.45, 0, 0.55, 1) forwards;
+}
+@keyframes book-turn-fwd {
+  from { transform: rotateY(0deg); }
+  to   { transform: rotateY(-180deg); }
+}
+@keyframes book-turn-back {
+  from { transform: rotateY(180deg); }
+  to   { transform: rotateY(0deg); }
+}
+@keyframes book-turn-shadow {
+  0%, 100% { opacity: 0; }
+  45%, 55% { opacity: 1; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .book-unit.is-outgoing, .book-unit.is-incoming { transition: none; }
+  .book-unit.is-turning.turn-fwd,
+  .book-unit.is-turning.turn-back {
+    animation: none;
+    transform: none;
+    box-shadow: none;
+  }
+  .book-unit.is-turning.turn-fwd::after,
+  .book-unit.is-turning.turn-back::after {
+    animation: none;
+    opacity: 0;
+  }
 }
 
 /* Content template: real service photo + copy, same visual weight as the old single layout */

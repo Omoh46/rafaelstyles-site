@@ -252,11 +252,14 @@
     };
 
     var settle = function (unit) {
-      unit.classList.remove("is-outgoing", "is-incoming");
-      unit.style.transform = "";
+      unit.classList.remove("is-turning", "is-under", "turn-fwd", "turn-back");
     };
 
-    /* dir: 1 = forward (out to the left, new page in from the right), -1 = reverse. */
+    /* dir: 1 = forward, -1 = backward. Only ONE of the two pages actually rotates in 3D
+       (the "turning" one); the other sits flat underneath ("under") and is simply revealed
+       once the turning page's hidden backface passes the 90deg mark. Forward turns the
+       outgoing page away on its left edge; backward turns the incoming page back into place
+       on its right edge — a mirrored motion, not the same animation played in reverse. */
     var show = function (n, dir) {
       if (animating || total < 2) return;
       var next = (n + total) % total;
@@ -265,37 +268,33 @@
 
       var outgoing = units[page];
       var incoming = units[next];
+      var turning = dir === 1 ? outgoing : incoming;
+      var under = dir === 1 ? incoming : outgoing;
+      var turnClass = dir === 1 ? "turn-fwd" : "turn-back";
 
-      /* Big enough to hold whichever of the two pages is taller, so neither clips mid-slide. */
+      /* Big enough to hold whichever of the two pages is taller, so neither clips mid-turn. */
       track.style.height = Math.max(outgoing.scrollHeight, incoming.scrollHeight) + "px";
 
       incoming.hidden = false;
-      outgoing.classList.add("is-outgoing");
-      incoming.classList.add("is-incoming");
-      /* Jump the incoming page off-screen instantly (no transition to animate from, since it was
-         just display:none) before the next frame animates it in. */
-      outgoing.style.transform = "translateX(0%)";
-      incoming.style.transform = "translateX(" + (dir * 100) + "%)";
-      void incoming.offsetWidth; /* commit the start position */
+      under.classList.add("is-under");
+      turning.classList.add("is-turning", turnClass);
 
-      var reduceMotionNow = reduceMotionQuery.matches;
       var finish = function () {
         outgoing.hidden = true;
         settle(outgoing);
         settle(incoming);
         track.style.height = "";
         animating = false;
-        incoming.removeEventListener("transitionend", finish);
+        turning.removeEventListener("animationend", finish);
       };
-      incoming.addEventListener("transitionend", finish);
 
-      window.requestAnimationFrame(function () {
-        outgoing.style.transform = "translateX(" + (-dir * 100) + "%)";
-        incoming.style.transform = "translateX(0%)";
-        /* prefers-reduced-motion disables the CSS transition entirely (see styles.css), so
-           transitionend never fires there — resolve immediately instead of hanging. */
-        if (reduceMotionNow) finish();
-      });
+      if (reduceMotionQuery.matches) {
+        /* CSS disables the animation entirely under reduced motion (see styles.css), so
+           animationend never fires there — resolve immediately instead of hanging. */
+        finish();
+      } else {
+        turning.addEventListener("animationend", finish);
+      }
 
       page = next;
       counter.textContent = ("0" + (page + 1)).slice(-2);
