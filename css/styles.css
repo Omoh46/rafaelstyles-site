@@ -542,8 +542,8 @@ button { font-family: inherit; }
      no matter how many category blocks the stage contains. */
   .parallax-layer.layer-far {
     background-image:
-      linear-gradient(rgba(0,0,0,0.55), rgba(0,0,0,0.55)),
-      url("../assets/fabric-velvet-drapery.jpg");
+      linear-gradient(rgba(0,0,0,0.32), rgba(0,0,0,0.32)),
+      url("../assets/gold-satin-drape.jpg");
     background-repeat: no-repeat, no-repeat;
     background-position: 0 0, center;
     background-size: auto, cover;
