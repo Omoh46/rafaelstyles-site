@@ -92,12 +92,17 @@
   var stage = document.querySelector(".parallax-stage");
 
   if (stage && (farLayer || nearLayer) && !reduceMotionQuery.matches) {
+    /* Desktop (>=901px): layer-far's background is CSS `background-attachment: fixed` to the
+       viewport, so it already stays put as the page scrolls. Translating the element on top of
+       that would fight the fixed background and jitter, so the JS transform is skipped there.
+       Mobile keeps its tile background + this transform exactly as before. */
+    var farLayerFixedQuery = window.matchMedia("(min-width: 901px)");
     var ticking = false;
     var update = function () {
       ticking = false;
       var rect = stage.getBoundingClientRect();
       var progress = -rect.top;
-      if (farLayer) farLayer.style.transform = "translate3d(0, " + (progress * 0.06) + "px, 0)";
+      if (farLayer) farLayer.style.transform = farLayerFixedQuery.matches ? "" : "translate3d(0, " + (progress * 0.06) + "px, 0)";
       if (nearLayer) nearLayer.style.transform = "translate3d(0, " + (progress * 0.14) + "px, 0)";
     };
     window.addEventListener("scroll", function () {
@@ -106,6 +111,9 @@
         ticking = true;
       }
     }, { passive: true });
+    /* Also re-run on resize so crossing the 901px breakpoint clears/reapplies the transform,
+       rather than leaving a stale translate3d() fighting the newly (in)active fixed background. */
+    window.addEventListener("resize", update);
     update();
   }
 

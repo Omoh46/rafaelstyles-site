@@ -344,6 +344,11 @@ button { font-family: inherit; }
   padding: clamp(1.75rem, 3.2vw, 3rem) clamp(1.5rem, 5vw, 4.5rem);
   max-width: 640px;
   margin-left: auto; /* keeps copy hugging the centre line on very wide screens */
+  /* Whisper of fabric grain on the hero's black half: same asset as the lookbook backdrop,
+     but tinted far darker (~87% black) so it reads as clean black at a glance. */
+  background:
+    linear-gradient(rgba(0,0,0,0.87), rgba(0,0,0,0.87)),
+    url("../assets/fabric-velvet-drapery.jpg") center / cover no-repeat;
 }
 .hero-copy h1 {
   font-size: clamp(2.1rem, 4.2vw, 3.4rem);
@@ -446,6 +451,14 @@ button { font-family: inherit; }
 }
 .section-black { background: var(--black); }
 .section-panel { background: var(--black-soft); border-top: 1px solid var(--hairline); border-bottom: 1px solid var(--hairline); }
+/* Whisper of fabric grain on flat black (About Teaser on index.html + the bio section on about.html only,
+   scoped via this combined selector so every other section-black surface is untouched). */
+.section-black.fabric-veil {
+  background:
+    linear-gradient(rgba(0,0,0,0.87), rgba(0,0,0,0.87)),
+    url("../assets/fabric-velvet-drapery.jpg") center / cover no-repeat,
+    var(--black);
+}
 
 .section-head {
   max-width: 720px;
@@ -506,11 +519,28 @@ button { font-family: inherit; }
   pointer-events: none;
   will-change: transform;
 }
-/* Velvet gold drape: a seamless tile cut from the hero photo's own gold blanket, dimmed so photography and type stay the priority */
+/* Velvet gold drape: a seamless tile cut from the hero photo's own gold blanket, dimmed so photography and type stay the priority.
+   This is the MOBILE default (also the fallback for any browser below the 901px rule below). */
 .parallax-layer.layer-far {
   background:
     linear-gradient(rgba(0,0,0,0.55), rgba(0,0,0,0.55)),
     url("../assets/lookbook-velvet-drape.jpg") 0 0 / 820px auto repeat;
+}
+@media (min-width: 901px) {
+  /* Desktop: one full-bleed, non-repeating sheet instead of a visibly-repeating tile.
+     .layer-far spans the whole (very tall) parallax-stage, so `cover` sized against its own box
+     would blow the image up far past its native resolution. background-attachment: fixed makes the
+     browser resolve position/size against the VIEWPORT instead of the element box, so it stays sharp
+     no matter how many category blocks the stage contains. */
+  .parallax-layer.layer-far {
+    background-image:
+      linear-gradient(rgba(0,0,0,0.55), rgba(0,0,0,0.55)),
+      url("../assets/fabric-velvet-drapery.jpg");
+    background-repeat: no-repeat, no-repeat;
+    background-position: 0 0, center;
+    background-size: auto, cover;
+    background-attachment: scroll, fixed;
+  }
 }
 .parallax-layer.layer-near {
   background:
@@ -773,6 +803,7 @@ button { font-family: inherit; }
 
 /* ---------- Flip-book ---------- */
 .flipbook { position: relative; display: flex; justify-content: center; min-height: 460px; }
+.flipbook-cta { text-align: center; margin-top: clamp(1.5rem, 4vw, 2.5rem); }
 
 /* Closed: dark cover, tilted, coloured back cover peeking out, resting shadow */
 .book-cover {
