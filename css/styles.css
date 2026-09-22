@@ -1001,6 +1001,50 @@ button { font-family: inherit; }
 
 .gold-rule { display: block; width: 64px; height: 1px; background: var(--gold); margin: 0 0 1rem; }
 .book-page-lede { font-family: var(--font-display); font-size: 1.15rem; font-style: italic; color: var(--text); }
+
+/* Footer nav row: explicit Prev/Next + a "PAGE 01 / 20" counter, the primary visible navigation
+   alongside the existing tap-to-turn cue. The book wraps at both ends (see main.js), so neither
+   button is ever disabled. */
+.book-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.6rem;
+  margin-top: 1.25rem;
+  padding-top: 1.1rem;
+  border-top: 1px solid var(--hairline);
+}
+.book-nav-btn {
+  flex: 0 0 auto;
+  background: none;
+  border: 1px solid var(--gold-trim);
+  border-radius: 999px;
+  color: var(--gold);
+  font-family: var(--font-body);
+  font-size: 0.7rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  padding: 0.55em 1.05em;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.3s var(--ease), color 0.3s var(--ease);
+}
+.book-nav-btn:hover, .book-nav-btn:focus-visible { background: var(--gold); color: var(--black); }
+.book-nav-counter {
+  flex: 1 1 auto;
+  text-align: center;
+  font-family: var(--font-body);
+  font-size: 0.68rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+@media (max-width: 360px) {
+  .book-nav { gap: 0.4rem; }
+  .book-nav-btn { padding: 0.5em 0.7em; font-size: 0.64rem; letter-spacing: 0.1em; }
+  .book-nav-counter { font-size: 0.62rem; letter-spacing: 0.1em; }
+}
 .book-close {
   display: block;
   margin: 1.4rem auto 0;

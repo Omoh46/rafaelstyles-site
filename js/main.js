@@ -236,9 +236,15 @@
     var counter = reader.querySelector(".pc-current");
     var turnBtn = reader.querySelector(".turn-cue");
     var closeBtn = reader.querySelector(".book-close");
+    var prevBtn = reader.querySelector(".book-nav-prev");
+    var nextBtn = reader.querySelector(".book-nav-next");
+    var navCurrent = reader.querySelector(".book-nav-current");
+    var navTotal = reader.querySelector(".book-nav-total");
     var total = units.length;
     var page = 0;
     var animating = false;
+
+    navTotal.textContent = ("0" + total).slice(-2);
 
     var describe = function (p) {
       turnBtn.setAttribute("aria-label", "Turn the page (page " + (p + 1) + " of " + total + ")");
@@ -292,6 +298,7 @@
 
       page = next;
       counter.textContent = ("0" + (page + 1)).slice(-2);
+      navCurrent.textContent = ("0" + (page + 1)).slice(-2);
       describe(page);
     };
 
@@ -303,6 +310,7 @@
       units.forEach(function (u, i) { u.hidden = i !== 0; settle(u); });
       track.style.height = "";
       counter.textContent = "01";
+      navCurrent.textContent = "01";
       describe(0);
       turnBtn.focus({ preventScroll: true });
     };
@@ -316,6 +324,10 @@
     cover.addEventListener("click", open);
     closeBtn.addEventListener("click", close);
     turnBtn.addEventListener("click", function () { show(page + 1, 1); });
+    /* The book wraps at both ends (see the modulo in show() above), so Prev/Next are always
+       active — neither is ever disabled on the first or last page. */
+    prevBtn.addEventListener("click", function () { show(page - 1, -1); });
+    nextBtn.addEventListener("click", function () { show(page + 1, 1); });
     /* Click anywhere else on the open spread also advances, matching the old "tap the photo to
        turn" feel, but real controls (the closing page's Reserve link, the turn button itself)
        handle their own clicks and never trigger a page turn underneath them. */
