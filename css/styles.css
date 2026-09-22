@@ -302,26 +302,14 @@ button { font-family: inherit; }
 .js .intro > * { transition: transform 1.2s var(--ease); }
 .js .intro.is-dismissed > * { transform: translateY(-10px) scale(1.035); }
 .js .intro.is-dismissed .intro-cue { animation: none; }
-.intro-emblem {
-  width: min(86vw, 62svh, 620px);
+.intro-logo {
+  /* Full lockup (crest + wordmark + slogan baked into the art), 1490x1674 — taller than the old crest-only mark.
+     Bounded on BOTH axes so it scales down cleanly and never overflows a short mobile viewport. */
+  display: block;
+  width: auto;
   height: auto;
-  margin: -6svh 0 -8svh; /* the source PNG carries generous black padding */
-}
-.intro-wordmark {
-  font-family: var(--font-display);
-  font-weight: 600;
-  font-size: clamp(2rem, 6vw, 3.4rem);
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--gold);
-  line-height: 1.1;
-}
-.intro-tagline { /* same treatment as the sticky nav's .brand-sub */
-  font-size: 0.58rem;
-  letter-spacing: 0.24em;
-  text-transform: uppercase;
-  color: var(--text-muted);
-  margin-top: 0.25rem;
+  max-width: min(80vw, 520px);
+  max-height: min(64svh, 720px);
 }
 .intro-cue {
   margin-top: 2.25rem;
