@@ -542,12 +542,27 @@ button { font-family: inherit; }
      no matter how many category blocks the stage contains. */
   .parallax-layer.layer-far {
     background-image:
-      linear-gradient(rgba(0,0,0,0.32), rgba(0,0,0,0.32)),
+      linear-gradient(rgba(0,0,0,0.18), rgba(0,0,0,0.18)),
       url("../assets/gold-satin-drape.jpg");
     background-repeat: no-repeat, no-repeat;
     background-position: 0 0, center;
     background-size: auto, cover;
     background-attachment: scroll, fixed;
+  }
+  /* Legibility now lives here, not in the backdrop overlay above: a soft scrim scoped to each
+     category's own heading block, so it scrolls with the text and always sits behind it no
+     matter which part of the (fixed-attachment) fabric happens to be showing through at the time. */
+  .category-head {
+    position: relative;
+    z-index: 0; /* own stacking context, keeps the scrim scoped to just this block */
+  }
+  .category-head::before {
+    content: "";
+    position: absolute;
+    inset: -1.75rem -3rem;
+    z-index: -1;
+    background: radial-gradient(ellipse 60% 78% at 50% 50%, rgba(0,0,0,0.62) 0%, rgba(0,0,0,0.62) 38%, transparent 78%);
+    pointer-events: none;
   }
 }
 .parallax-layer.layer-near {
