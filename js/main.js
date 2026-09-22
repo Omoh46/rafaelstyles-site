@@ -225,34 +225,86 @@
     onBreakpoint();
   });
 
-  /* ---------- Flip-book ---------- */
+  /* ---------- Flip-book: 20 paired photo+text pages, sliding in from left/right ---------- */
   var book = document.getElementById("flipbook");
   if (book) {
     var cover = book.querySelector(".book-cover");
     var reader = document.getElementById("book-reader");
-    var photo = reader.querySelector(".book-photo");
-    var pages = Array.prototype.slice.call(reader.querySelectorAll(".book-page"));
+    var spread = document.getElementById("book-spread");
+    var track = document.getElementById("book-track");
+    var units = Array.prototype.slice.call(track.querySelectorAll(".book-unit"));
     var counter = reader.querySelector(".pc-current");
+    var turnBtn = reader.querySelector(".turn-cue");
     var closeBtn = reader.querySelector(".book-close");
-    var total = pages.length;
+    var total = units.length;
     var page = 0;
+    var animating = false;
 
-    var show = function (n) {
-      page = (n + total) % total;
-      pages.forEach(function (p, i) { p.hidden = i !== page; });
+    var describe = function (p) {
+      turnBtn.setAttribute("aria-label", "Turn the page (page " + (p + 1) + " of " + total + ")");
+    };
+
+    var settle = function (unit) {
+      unit.classList.remove("is-outgoing", "is-incoming");
+      unit.style.transform = "";
+    };
+
+    /* dir: 1 = forward (out to the left, new page in from the right), -1 = reverse. */
+    var show = function (n, dir) {
+      if (animating || total < 2) return;
+      var next = (n + total) % total;
+      if (next === page) return;
+      animating = true;
+
+      var outgoing = units[page];
+      var incoming = units[next];
+
+      /* Big enough to hold whichever of the two pages is taller, so neither clips mid-slide. */
+      track.style.height = Math.max(outgoing.scrollHeight, incoming.scrollHeight) + "px";
+
+      incoming.hidden = false;
+      outgoing.classList.add("is-outgoing");
+      incoming.classList.add("is-incoming");
+      /* Jump the incoming page off-screen instantly (no transition to animate from, since it was
+         just display:none) before the next frame animates it in. */
+      outgoing.style.transform = "translateX(0%)";
+      incoming.style.transform = "translateX(" + (dir * 100) + "%)";
+      void incoming.offsetWidth; /* commit the start position */
+
+      var reduceMotionNow = reduceMotionQuery.matches;
+      var finish = function () {
+        outgoing.hidden = true;
+        settle(outgoing);
+        settle(incoming);
+        track.style.height = "";
+        animating = false;
+        incoming.removeEventListener("transitionend", finish);
+      };
+      incoming.addEventListener("transitionend", finish);
+
+      window.requestAnimationFrame(function () {
+        outgoing.style.transform = "translateX(" + (-dir * 100) + "%)";
+        incoming.style.transform = "translateX(0%)";
+        /* prefers-reduced-motion disables the CSS transition entirely (see styles.css), so
+           transitionend never fires there — resolve immediately instead of hanging. */
+        if (reduceMotionNow) finish();
+      });
+
+      page = next;
       counter.textContent = ("0" + (page + 1)).slice(-2);
-      photo.setAttribute("aria-label", "Turn the page (page " + (page + 1) + " of " + total + ")");
-      photo.classList.remove("is-turning");
-      void photo.offsetWidth; /* restart the cross-fade */
-      photo.classList.add("is-turning");
+      describe(page);
     };
 
     var open = function () {
       book.dataset.state = "open";
       cover.setAttribute("aria-expanded", "true");
       reader.hidden = false;
-      show(0);
-      photo.focus({ preventScroll: true });
+      page = 0;
+      units.forEach(function (u, i) { u.hidden = i !== 0; settle(u); });
+      track.style.height = "";
+      counter.textContent = "01";
+      describe(0);
+      turnBtn.focus({ preventScroll: true });
     };
     var close = function () {
       book.dataset.state = "closed";
@@ -263,10 +315,21 @@
 
     cover.addEventListener("click", open);
     closeBtn.addEventListener("click", close);
-    photo.addEventListener("click", function () { show(page + 1); });
-    reader.addEventListener("keydown", function (e) {
-      if (e.key === "ArrowRight") show(page + 1);
-      else if (e.key === "ArrowLeft") show(page - 1);
+    turnBtn.addEventListener("click", function () { show(page + 1, 1); });
+    /* Click anywhere else on the open spread also advances, matching the old "tap the photo to
+       turn" feel, but real controls (the closing page's Reserve link, the turn button itself)
+       handle their own clicks and never trigger a page turn underneath them. */
+    spread.addEventListener("click", function (e) {
+      if (e.target.closest("a, button")) return;
+      show(page + 1, 1);
+    });
+    /* Listens on the document (gated by open state) rather than just on `reader`, so arrow keys
+       still work after a mouse click on the plain (non-focusable) spread background, which
+       doesn't move keyboard focus into the reader the way clicking the turn button does. */
+    document.addEventListener("keydown", function (e) {
+      if (book.dataset.state !== "open") return;
+      if (e.key === "ArrowRight") show(page + 1, 1);
+      else if (e.key === "ArrowLeft") show(page - 1, -1);
       else if (e.key === "Escape") close();
     });
   }

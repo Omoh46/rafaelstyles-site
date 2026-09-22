@@ -84,7 +84,7 @@
       </div>
     </div>
     <div class="container flipbook-tray">
-      <div class="flipbook" id="flipbook" data-state="closed" data-total="15">
+      <div class="flipbook" id="flipbook" data-state="closed" data-total="20">
 
         <button class="book-cover" type="button" aria-expanded="false" aria-controls="book-reader">
           <span class="book-back" aria-hidden="true"></span>
@@ -101,106 +101,228 @@
             <span class="masthead-name">Rafael Styles</span>
             <span class="masthead-sub">A private styling experience, one page at a time.</span>
           </header>
-          <div class="book-spread">
-            <button class="book-photo placeholder-slot" type="button" aria-label="Turn the page">
-              <span class="page-counter" aria-hidden="true"><span class="pc-current">01</span>/<span class="pc-total">15</span></span>
-              <span class="placeholder-label">
-                <svg class="placeholder-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" aria-hidden="true"><rect x="2.5" y="6" width="19" height="14" rx="2"/><circle cx="12" cy="13" r="3.6"/><path d="M8 6l1.4-2.2h5.2L16 6"/></svg>
-                <span class="placeholder-title">Photo Coming Soon</span>
-              </span>
-              <span class="turn-cue" aria-hidden="true">Tap to turn</span>
-            </button>
-            <div class="book-text" aria-live="polite">
-            <article class="book-page" data-page="0">
-              <h3>The Red Carpet Arrives</h3>
-              <span class="gold-rule" aria-hidden="true"></span>
-              <p class="book-page-lede">Red carpet salon luxury, delivered directly to your doorstep.</p>
-              <p>Rafael brings the atelier to you, so the only thing left to plan is what you will wear.</p>
-            </article>
-            <article class="book-page" data-page="1" hidden>
-              <h3>Your Own Space</h3>
-              <span class="gold-rule" aria-hidden="true"></span>
-              <p class="book-page-lede">No traffic, no parking, no crowded blowout bar.</p>
-              <p>A private styling experience curated entirely around your lifestyle, in the comfort of your own home.</p>
-            </article>
-            <article class="book-page" data-page="2" hidden>
-              <h3>Signature Canvas Finishes</h3>
-              <span class="gold-rule" aria-hidden="true"></span>
-              <p class="book-page-lede">Every look begins with your hair&rsquo;s length, density, and texture.</p>
-              <p>Browse the lookbook, choose the finish that feels like you, and let the artistry follow.</p>
-            </article>
-            <article class="book-page" data-page="3" hidden>
-              <h3>Weekly Maintenance</h3>
-              <span class="gold-rule" aria-hidden="true"></span>
-              <p class="book-page-lede">Effortlessly polished, week after week.</p>
-              <p>Essential weekly upkeep, tailored flawlessly so you always leave feeling glamorous.</p>
-            </article>
-            <article class="book-page" data-page="4" hidden>
-              <h3>Special Events</h3>
-              <span class="gold-rule" aria-hidden="true"></span>
-              <p class="book-page-lede">For the moments that call for a red carpet.</p>
-              <p>Your most special occasions deserve a finish that photographs as beautifully as it feels.</p>
-            </article>
-            <article class="book-page" data-page="5" hidden>
+          <div class="book-spread" id="book-spread">
+            <span class="page-counter" aria-hidden="true"><span class="pc-current">01</span>/<span class="pc-total">20</span></span>
+            <button class="turn-cue" type="button" aria-label="Turn the page (page 1 of 20)">Tap to turn</button>
+            <div class="book-track" id="book-track" aria-live="polite">
+            <div class="book-unit" data-page="0" data-template="divider">
+              <span class="eyebrow">Select Your Signature Canvas Finish</span>
+              <h3>The Lookbook Menu</h3>
+              <div class="ornament"><span class="ornament-glyph" aria-hidden="true">&#10022;</span></div>
+              <p class="book-page-lede">A catalog of the mobile atelier&rsquo;s services, enhancements, and companion experiences. Tap any card for the full description, then reserve your chair.</p>
+            </div>
+
+            <div class="book-unit" data-page="1" data-template="divider" hidden>
+              <span class="eyebrow">Category One</span>
+              <h3>Signature Experience</h3>
+              <div class="ornament"><span class="ornament-glyph" aria-hidden="true">&#10022;</span></div>
+              <p class="book-page-lede">Your foundation service, custom-tailored to your hair&rsquo;s length, density, and texture.</p>
+            </div>
+
+            <div class="book-unit" data-page="2" data-template="content" hidden>
+              <div class="book-unit-photo">
+                <img src="assets/service-satin-drape-blowout.jpg?v=r2" alt="Model with a smooth, glossy honey-blonde blowout with softly curved ends" width="1179" height="1176" loading="lazy">
+              </div>
+              <div class="book-unit-copy">
+                <span class="unit-dek">Signature Experience</span>
+                <h3>The Satin Drape Blowout</h3>
+                <span class="gold-rule" aria-hidden="true"></span>
+                <p>Tailored for short to classic hair lengths featuring classic density and texture. Masterfully crafted to achieve your choice of either defined, bouncy fluid volume or a sleek, smooth polished finish.</p>
+              </div>
+            </div>
+
+            <div class="book-unit" data-page="3" data-template="content" hidden>
+              <div class="book-unit-photo">
+                <img src="assets/service-velvet-cascade-blowout.jpg?v=r2" alt="Model with long, voluminous, softly waved brunette hair cascading over one shoulder" width="1179" height="1195" loading="lazy">
+              </div>
+              <div class="book-unit-copy">
+                <span class="unit-dek">Signature Experience</span>
+                <h3>The Velvet Cascade Blowout</h3>
+                <span class="gold-rule" aria-hidden="true"></span>
+                <p>Curated for hair featuring luxurious length, magnificent density, or rich texture requiring meticulous drying care. Establishes a gorgeous foundation for either defined, bouncy fluid volume or a sleek, smooth polished finish.</p>
+              </div>
+            </div>
+
+            <div class="book-unit" data-page="4" data-template="content" hidden>
+              <div class="book-unit-photo">
+                <img src="assets/service-thermal-elan-express.jpg?v=r2" alt="Model with sleek, smooth, straight brunette hair" width="1179" height="1170" loading="lazy">
+              </div>
+              <div class="book-unit-copy">
+                <span class="unit-dek">Signature Experience</span>
+                <h3>The Thermal &Eacute;lan Express</h3>
+                <span class="gold-rule" aria-hidden="true"></span>
+                <p>An entirely dry-styling transition utilizing premium hot tools on pre-dried, detangled hair. Curated to create cascading waves, luscious curls, or a sleek, glass-like flat iron finish.</p>
+              </div>
+            </div>
+
+            <div class="book-unit" data-page="5" data-template="divider" hidden>
+              <span class="eyebrow">Category Two</span>
+              <h3>Artisanal Enhancements &amp; Upgrades</h3>
+              <div class="ornament"><span class="ornament-glyph" aria-hidden="true">&#10022;</span></div>
+              <p class="book-page-lede">Add-on enhancements only, always paired with a SIGNATURE EXPERIENCE above, never booked standalone.</p>
+            </div>
+
+            <div class="book-unit" data-page="6" data-template="content" hidden>
+              <div class="book-unit-photo">
+                <img src="assets/service-hd-thermal-finish.jpg?v=r2" alt="Model with long platinum-blonde hair, pin-straight on one side and in soft curls on the other" width="727" height="722" loading="lazy">
+              </div>
+              <div class="book-unit-copy">
+                <span class="unit-dek">Add-On Enhancement</span>
+                <h3>High-Definition Thermal Finish</h3>
+                <span class="gold-rule" aria-hidden="true"></span>
+                <p>Upgrade your blowout using premium hot tools to create cascading waves, luscious curls, or a detailed, smooth glass-like flat iron finish.</p>
+              </div>
+            </div>
+
+            <div class="book-unit" data-page="7" data-template="content" hidden>
+              <div class="book-unit-photo">
+                <img src="assets/service-bombshell-brush-set.jpg?v=r2" alt="Model with voluminous brunette hair, ombr&eacute; ends and rollers still set at the crown" width="1179" height="1162" loading="lazy">
+              </div>
+              <div class="book-unit-copy">
+                <span class="unit-dek">Add-On Enhancement</span>
+                <h3>The Bombshell Brush-Set</h3>
+                <span class="gold-rule" aria-hidden="true"></span>
+                <p>The ultimate master technique for dramatic volume. Multiple premium round brushes are left locked directly within the hair to cool and set naturally as a luxury roller-set system, creating unparalleled body, volume, and movement with flawless flare and bounce.</p>
+              </div>
+            </div>
+
+            <div class="book-unit" data-page="8" data-template="content" hidden>
+              <div class="book-unit-photo">
+                <img src="assets/service-roller-clip-retention.jpg?v=r2" alt="Model with dark hair pin-curled and secured with silver clips at the crown" width="1005" height="1243" loading="lazy">
+              </div>
+              <div class="book-unit-copy">
+                <span class="unit-dek">Add-On Enhancement</span>
+                <h3>Red-Carpet Roller-Clip Retention</h3>
+                <span class="gold-rule" aria-hidden="true"></span>
+                <p>A vintage setting technique for maximum volume longevity. Every section is meticulously sculpted into a pin-curl and anchored to the scalp using premium silver duck-bill clips upon round-brush release to lock maximum volume in place. These clips are left in the hair to set and are yours to keep as you retain your volume until it&rsquo;s time for your future reveal.</p>
+              </div>
+            </div>
+
+            <div class="book-unit" data-page="9" data-template="content" hidden>
+              <div class="book-unit-photo">
+                <img src="assets/service-tailored-bespoke-accents.jpg?v=r2" alt="Model with a softly braided, side-swept brunette style" width="1179" height="1178" loading="lazy">
+              </div>
+              <div class="book-unit-copy">
+                <span class="unit-dek">Add-On Enhancement</span>
+                <h3>Tailored Bespoke Accents</h3>
+                <span class="gold-rule" aria-hidden="true"></span>
+                <p>Soft, poetic styling enhancements including chic ponytails, organic braids, undone buns, or custom accessory placement.</p>
+                <p><em>Note: focuses on soft, effortless, classic finishes; architectural updos are NOT YET AVAILABLE.</em></p>
+              </div>
+            </div>
+
+            <div class="book-unit" data-page="10" data-template="content" hidden>
+              <div class="book-unit-photo">
+                <img src="assets/service-luxe-extension-integration.jpg?v=r2" alt="Model with long, full chestnut waves" width="1179" height="1157" loading="lazy">
+              </div>
+              <div class="book-unit-copy">
+                <span class="unit-dek">Add-On Enhancement</span>
+                <h3>Luxe Extension Integration</h3>
+                <span class="gold-rule" aria-hidden="true"></span>
+                <p>Meticulous placement, secure anchoring, and expert heat-styling/blending of your personal extensions into your finished blowout style. Guests provide their own fresh, completely clean, bone-dry, and thoroughly detangled clip-in extensions or premium halo wefts only.</p>
+              </div>
+            </div>
+
+            <div class="book-unit" data-page="11" data-template="content" hidden>
+              <div class="book-unit-photo">
+                <img src="assets/service-coiled-satin-alignment-silk-press.jpg?v=r2" alt="Model with sleek, pin-straight black silk-pressed hair" width="1179" height="1162" loading="lazy">
+              </div>
+              <div class="book-unit-copy">
+                <span class="unit-dek">Add-On Enhancement</span>
+                <h3>The Coiled Satin Alignment <span class="visually-hidden">(Silk Press)</span></h3>
+                <span class="gold-rule" aria-hidden="true"></span>
+                <p>(Silk Press) Elite thermal smoothing and precision silk press for highly coiled or deeply textured hair.</p>
+              </div>
+            </div>
+
+            <div class="book-unit" data-page="12" data-template="content" hidden>
+              <div class="book-unit-photo">
+                <img src="assets/service-bespoke-tress-liberation.jpg?v=r2" alt="Model glancing over her shoulder with very long, voluminous caramel-highlighted waves" width="1153" height="1149" loading="lazy">
+              </div>
+              <div class="book-unit-copy">
+                <span class="unit-dek">Add-On Enhancement</span>
+                <h3>Bespoke Tress Liberation</h3>
+                <span class="gold-rule" aria-hidden="true"></span>
+                <p>A specialized, highly restorative detangling session designed to gently release intricate knots and stubborn matting without structural breakage using premium slip-agents.</p>
+                <p><em>Services for dreadlocks are not available.</em></p>
+              </div>
+            </div>
+
+            <div class="book-unit" data-page="13" data-template="content" hidden>
+              <div class="book-unit-photo">
+                <img src="assets/service-extended-care.jpg?v=r2" alt="Model glancing over her shoulder with long, glossy chestnut waves" width="1179" height="1158" loading="lazy">
+              </div>
+              <div class="book-unit-copy">
+                <span class="unit-dek">Add-On Enhancement</span>
+                <h3>Extended Care</h3>
+                <span class="gold-rule" aria-hidden="true"></span>
+                <p>A highly recommended scheduling buffer if your hair features exceptional length, rich texture, or magnificent density that routinely requires a little extra styling time to safeguard our service timeline.</p>
+                <p><em>The Rafael Styles Courtesy: this buffer is only charged if actually used, if your service completes within the standard block, the fee is waived at checkout.</em></p>
+              </div>
+            </div>
+
+            <div class="book-unit" data-page="14" data-template="divider" hidden>
+              <span class="eyebrow">Category Three</span>
+              <h3>The Companion Experience</h3>
+              <div class="ornament"><span class="ornament-glyph" aria-hidden="true">&#10022;</span></div>
+              <p class="book-page-lede">Share the spotlight with a back-to-back glamorous companion experience. Every companion experience service includes a built-in group courtesy discount.</p>
+            </div>
+
+            <div class="book-unit" data-page="15" data-template="content" hidden>
+              <div class="book-unit-photo">
+                <img src="assets/service-satin-companion.jpg?v=r2" alt="Two models with long, glossy brunette and blonde waves" width="1179" height="1165" loading="lazy">
+              </div>
+              <div class="book-unit-copy">
+                <span class="unit-dek">Companion Experience</span>
+                <h3>The Satin Companion</h3>
+                <span class="gold-rule" aria-hidden="true"></span>
+                <p>Add a second back-to-back styling experience for a companion featuring fine to classic hair length and density.</p>
+              </div>
+            </div>
+
+            <div class="book-unit" data-page="16" data-template="content" hidden>
+              <div class="book-unit-photo">
+                <img src="assets/service-velvet-companion.jpg?v=r3" alt="Two models: a blonde model with long, glossy golden waves in the foreground and a brunette model behind her" width="1179" height="1152" loading="lazy">
+              </div>
+              <div class="book-unit-copy">
+                <span class="unit-dek">Companion Experience</span>
+                <h3>The Velvet Companion</h3>
+                <span class="gold-rule" aria-hidden="true"></span>
+                <p>Add a second back-to-back styling experience for a companion featuring magnificent length or dense texture.</p>
+              </div>
+            </div>
+
+            <div class="book-unit" data-page="17" data-template="content" hidden>
+              <div class="book-unit-photo">
+                <img src="assets/service-elan-companion.jpg?v=r4" alt="Two models: a brunette model with long, cascading waves in the foreground and a blonde model behind her" width="1179" height="1143" loading="lazy">
+              </div>
+              <div class="book-unit-copy">
+                <span class="unit-dek">Companion Experience</span>
+                <h3>The &Eacute;lan Companion</h3>
+                <span class="gold-rule" aria-hidden="true"></span>
+                <p>Add a second back-to-back styling experience for a companion utilizing premium hot tools on pre-dried, detangled hair. Masterfully crafted to create cascading waves, luscious curls, or a sleek flat iron finish.</p>
+              </div>
+            </div>
+
+            <div class="book-unit" data-page="18" data-template="content" hidden>
+              <div class="book-unit-photo">
+                <img src="assets/service-la-petite-angelique.jpg?v=r2" alt="Young girl with long, soft golden-blonde waves" width="1179" height="1153" loading="lazy">
+              </div>
+              <div class="book-unit-copy">
+                <span class="unit-dek">Companion Experience</span>
+                <h3>La Petite Angelique</h3>
+                <span class="gold-rule" aria-hidden="true"></span>
+                <p>A dedicated styling experience curated exclusively for children 12 and under. Masterfully crafted to achieve your choice of either a weightless, defined round-brush bounce or a thermal polished finish for your little one.</p>
+              </div>
+            </div>
+
+            <div class="book-unit closing" data-page="19" data-template="divider" hidden>
               <h3>Reserve Your Chair</h3>
-              <span class="gold-rule" aria-hidden="true"></span>
+              <div class="ornament"><span class="ornament-glyph" aria-hidden="true">&#10022;</span></div>
               <p class="book-page-lede">Your private styling experience awaits.</p>
-              <p>When you are ready, choose Reserve in the menu above and select your experience.</p>
-            </article>
-            <article class="book-page" data-page="6" hidden>
-              <h3>Effortless Glamour</h3>
-              <span class="gold-rule" aria-hidden="true"></span>
-              <p class="book-page-lede">Our slogan, brought to life.</p>
-              <p>Effortless Glamour, On Demand isn&rsquo;t just a tagline, it&rsquo;s the standard for every appointment Rafael delivers.</p>
-            </article>
-            <article class="book-page" data-page="7" hidden>
-              <h3>The Art of the Blowout</h3>
-              <span class="gold-rule" aria-hidden="true"></span>
-              <p class="book-page-lede">Precision honed over a decade in Chicago&rsquo;s finest salons.</p>
-              <p>Every finish is built on technique first, so the results photograph as beautifully as they feel.</p>
-            </article>
-            <article class="book-page" data-page="8" hidden>
-              <h3>Curated Just for You</h3>
-              <span class="gold-rule" aria-hidden="true"></span>
-              <p class="book-page-lede">No two appointments are the same.</p>
-              <p>Rafael tailors every visit to your hair, your schedule, and the occasion ahead.</p>
-            </article>
-            <article class="book-page" data-page="9" hidden>
-              <h3>Artisanal Enhancements</h3>
-              <span class="gold-rule" aria-hidden="true"></span>
-              <p class="book-page-lede">Small additions, elevated results.</p>
-              <p>Pair your signature service with an artisanal enhancement for an even more finished look.</p>
-            </article>
-            <article class="book-page" data-page="10" hidden>
-              <h3>Bring a Companion</h3>
-              <span class="gold-rule" aria-hidden="true"></span>
-              <p class="book-page-lede">Glamour is better shared.</p>
-              <p>Book a back-to-back companion experience and enjoy your appointment side by side.</p>
-            </article>
-            <article class="book-page" data-page="11" hidden>
-              <h3>Chicagoland &amp; The North Shore</h3>
-              <span class="gold-rule" aria-hidden="true"></span>
-              <p class="book-page-lede">Wherever you call home, Rafael comes to you.</p>
-              <p>Mobile luxury hair artistry serving Chicagoland and the North Shore corridors.</p>
-            </article>
-            <article class="book-page" data-page="12" hidden>
-              <h3>Your Private Atelier</h3>
-              <span class="gold-rule" aria-hidden="true"></span>
-              <p class="book-page-lede">The salon chair, reimagined.</p>
-              <p>Your space becomes the atelier: no waiting room, no crowd, just you and your stylist.</p>
-            </article>
-            <article class="book-page" data-page="13" hidden>
-              <h3>Peace of Mind, Booked</h3>
-              <span class="gold-rule" aria-hidden="true"></span>
-              <p class="book-page-lede">Every reservation is confirmed and cared for.</p>
-              <p>From the moment you book, the details are handled, so you can simply look forward to your appointment.</p>
-            </article>
-            <article class="book-page" data-page="14" hidden>
-              <h3>See You in the Chair</h3>
-              <span class="gold-rule" aria-hidden="true"></span>
-              <p class="book-page-lede">Your next red carpet moment awaits.</p>
-              <p>The chair is yours whenever you&rsquo;re ready, we can&rsquo;t wait to welcome you.</p>
-            </article>
+              <p>When you&rsquo;re ready, choose the button below to select your experience.</p>
+              <a class="btn btn-solid" href="https://rafaelstyles.glossgenius.com" target="_blank" rel="noopener noreferrer">Reserve Your Chair<span class="visually-hidden"> (opens GlossGenius booking in a new tab)</span></a>
+            </div>
             </div>
           </div>
           <button class="book-close" type="button">Close the book</button>
