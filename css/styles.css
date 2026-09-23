@@ -352,11 +352,9 @@ button { font-family: inherit; }
   padding: clamp(1.75rem, 3.2vw, 3rem) clamp(1.5rem, 5vw, 4.5rem);
   max-width: 640px;
   margin-left: auto; /* keeps copy hugging the centre line on very wide screens */
-  /* Whisper of fabric grain on the hero's black half: same asset as the lookbook backdrop,
-     but tinted far darker (~87% black) so it reads as clean black at a glance. */
-  background:
-    linear-gradient(rgba(0,0,0,0.87), rgba(0,0,0,0.87)),
-    url("../assets/fabric-velvet-drapery.jpg") center / cover no-repeat;
+  /* Flat black — falls back to .hero's own background. The fabric texture used to live here;
+     it left a hard vertical seam where the image cut off against flat black, and has moved to
+     the Lookbook Menu's intro block instead. */
 }
 .hero-copy h1 {
   font-size: clamp(2.1rem, 4.2vw, 3.4rem);
@@ -462,6 +460,17 @@ button { font-family: inherit; }
 /* Whisper of fabric grain on flat black (About Teaser on index.html + the bio section on about.html only,
    scoped via this combined selector so every other section-black surface is untouched). */
 .section-black.fabric-veil {
+  background:
+    linear-gradient(rgba(0,0,0,0.87), rgba(0,0,0,0.87)),
+    url("../assets/fabric-velvet-drapery.jpg") center / cover no-repeat,
+    var(--black);
+}
+/* Same whisper-of-fabric treatment, scoped to just the Lookbook Menu's intro block (eyebrow +
+   heading + description) inside .flipbook-surface — not the whole section, so it doesn't bleed
+   down into .flipbook-tray where the book and velvet-tray photo already sit. There's only one
+   other .section-head on this page (the About Teaser, styled via .section-black.fabric-veil
+   above), so this descendant selector can't collide with it. */
+.flipbook-surface .section-head {
   background:
     linear-gradient(rgba(0,0,0,0.87), rgba(0,0,0,0.87)),
     url("../assets/fabric-velvet-drapery.jpg") center / cover no-repeat,
