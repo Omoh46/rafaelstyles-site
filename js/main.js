@@ -255,6 +255,17 @@
       unit.classList.remove("is-turning", "is-under", "turn-fwd", "turn-back");
     };
 
+    var closeUnitAccordion = function (unit) {
+      var trigger = unit.querySelector(".accordion-trigger");
+      if (!trigger || trigger.getAttribute("aria-expanded") !== "true") return;
+      var panel = document.getElementById(trigger.getAttribute("aria-controls"));
+      trigger.setAttribute("aria-expanded", "false");
+      if (panel) {
+        panel.setAttribute("data-open", "false");
+        panel.style.maxHeight = "0px";
+      }
+    };
+
     /* dir: 1 = forward, -1 = backward. Only ONE of the two pages actually rotates in 3D
        (the "turning" one); the other sits flat underneath ("under") and is simply revealed
        once the turning page's hidden backface passes the 90deg mark. Forward turns the
@@ -281,6 +292,7 @@
 
       var finish = function () {
         outgoing.hidden = true;
+        closeUnitAccordion(outgoing);
         settle(outgoing);
         settle(incoming);
         track.style.height = "";
@@ -307,7 +319,7 @@
       cover.setAttribute("aria-expanded", "true");
       reader.hidden = false;
       page = 0;
-      units.forEach(function (u, i) { u.hidden = i !== 0; settle(u); });
+      units.forEach(function (u, i) { u.hidden = i !== 0; settle(u); closeUnitAccordion(u); });
       track.style.height = "";
       counter.textContent = "01";
       navCurrent.textContent = "01";

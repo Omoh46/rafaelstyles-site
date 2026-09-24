@@ -1069,6 +1069,11 @@ button { font-family: inherit; }
 .book-unit-copy p { color: var(--text-muted); font-size: 0.92rem; margin-bottom: 0.85em; }
 .book-unit-copy p:last-child { margin-bottom: 0; }
 
+.book-unit-copy .book-accordion { border-top: 0; margin-top: 0.3em; }
+.book-unit-copy .accordion-trigger { padding: 0 0 0.6em; font-size: 0.72rem; }
+.book-unit-copy .accordion-panel-inner { padding: 0 0 0.2rem; }
+.book-unit-copy .accordion-panel-inner p:last-child { margin-bottom: 0; }
+
 /* Divider template: intro / category dividers / closing page — section-head styling, no photo.
    :not([hidden]) keeps this from fighting .book-unit[hidden]{display:none} above — same
    specificity, so without it, a hidden divider page would still render as a flex box. */
