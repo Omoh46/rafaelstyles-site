@@ -462,7 +462,7 @@ button { font-family: inherit; }
    section on about.html, and the lookbook.html page header. */
 .section-black.fabric-veil {
   background:
-    linear-gradient(rgba(0,0,0,0.87), rgba(0,0,0,0.87)),
+    linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)),
     url("../assets/fabric-velvet-drapery.jpg") center / cover no-repeat,
     var(--black);
 }
