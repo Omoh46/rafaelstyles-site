@@ -457,20 +457,10 @@ button { font-family: inherit; }
 }
 .section-black { background: var(--black); }
 .section-panel { background: var(--black-soft); border-top: 1px solid var(--hairline); border-bottom: 1px solid var(--hairline); }
-/* Whisper of fabric grain on flat black (About Teaser on index.html + the bio section on about.html only,
-   scoped via this combined selector so every other section-black surface is untouched). */
+/* Fabric texture on flat black, applied via this combined class so every other section-black
+   surface stays untouched: the About Teaser and Lookbook Menu intro on index.html, the bio
+   section on about.html, and the lookbook.html page header. */
 .section-black.fabric-veil {
-  background:
-    linear-gradient(rgba(0,0,0,0.87), rgba(0,0,0,0.87)),
-    url("../assets/fabric-velvet-drapery.jpg") center / cover no-repeat,
-    var(--black);
-}
-/* Same whisper-of-fabric treatment, scoped to just the Lookbook Menu's intro block (eyebrow +
-   heading + description) inside .flipbook-surface — not the whole section, so it doesn't bleed
-   down into .flipbook-tray where the book and velvet-tray photo already sit. There's only one
-   other .section-head on this page (the About Teaser, styled via .section-black.fabric-veil
-   above), so this descendant selector can't collide with it. */
-.flipbook-surface .section-head {
   background:
     linear-gradient(rgba(0,0,0,0.87), rgba(0,0,0,0.87)),
     url("../assets/fabric-velvet-drapery.jpg") center / cover no-repeat,
@@ -544,18 +534,17 @@ button { font-family: inherit; }
     url("../assets/lookbook-velvet-drape.jpg") 0 0 / 820px auto repeat;
 }
 @media (min-width: 901px) {
-  /* Desktop: one full-bleed, non-repeating sheet instead of a visibly-repeating tile.
-     .layer-far spans the whole (very tall) parallax-stage, so `cover` sized against its own box
-     would blow the image up far past its native resolution. background-attachment: fixed makes the
-     browser resolve position/size against the VIEWPORT instead of the element box, so it stays sharp
-     no matter how many category blocks the stage contains. */
+  /* Desktop: the gold drape tiles at a fixed 900px width rather than being stretched/cropped
+     with `cover` to fill .layer-far's own box, which spans the whole (very tall) parallax-stage
+     and would blow the image up far past its native resolution. background-attachment: fixed
+     keeps it reading as still/parallax rather than scrolling with the page. */
   .parallax-layer.layer-far {
     background-image:
       linear-gradient(rgba(0,0,0,0.18), rgba(0,0,0,0.18)),
       url("../assets/gold-satin-drape.jpg");
-    background-repeat: no-repeat, no-repeat;
-    background-position: 0 0, center;
-    background-size: auto, cover;
+    background-repeat: no-repeat, repeat;
+    background-position: 0 0, 0 0;
+    background-size: auto, 900px auto;
     background-attachment: scroll, fixed;
   }
   /* Legibility now lives here, not in the backdrop overlay above: a soft scrim scoped to each
@@ -1042,7 +1031,7 @@ button { font-family: inherit; }
 }
 
 /* Content template: real service photo + copy, same visual weight as the old single layout */
-.book-unit-photo { aspect-ratio: 4 / 3; overflow: hidden; border-radius: 2px; border: 1px solid var(--hairline); margin-bottom: 1.1rem; background: #000; }
+.book-unit-photo { aspect-ratio: 3 / 2; overflow: hidden; border-radius: 2px; border: 1px solid var(--hairline); margin-bottom: 1.1rem; background: #000; }
 .book-unit-photo img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 22%; }
 .book-unit-copy .unit-dek {
   display: block;
