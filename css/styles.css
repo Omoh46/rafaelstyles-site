@@ -457,10 +457,18 @@ button { font-family: inherit; }
 }
 .section-black { background: var(--black); }
 .section-panel { background: var(--black-soft); border-top: 1px solid var(--hairline); border-bottom: 1px solid var(--hairline); }
-/* Fabric texture on flat black, applied via this combined class so every other section-black
-   surface stays untouched: the About Teaser and Lookbook Menu intro on index.html, the bio
-   section on about.html, and the lookbook.html page header. */
-.section-black.fabric-veil {
+/* A section-black that's a direct child of .fabric-veil must not paint its own opaque black,
+   or it hides the wrapper's texture behind it entirely (the two sections sit flush with no
+   gap between them). This only fires when .fabric-veil is wrapping sections rather than being
+   applied directly to a single element (the about.html bio, the lookbook.html header). */
+.fabric-veil > .section-black { background: none; }
+/* Fabric texture, applied via this standalone class so every plain section-black/other surface
+   stays untouched. Painted once on the .fabric-veil element itself, so where it wraps multiple
+   sections (the About Teaser + Lookbook Menu intro on index.html) the diagonal fold pattern
+   runs continuously across their combined height instead of each section re-covering its own
+   height independently and breaking the pattern at the seam. Also used directly on a single
+   element with both classes: the bio section on about.html, and the lookbook.html page header. */
+.fabric-veil {
   background:
     linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)),
     url("../assets/fabric-velvet-drapery.jpg") center / cover no-repeat,
