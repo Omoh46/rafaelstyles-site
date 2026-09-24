@@ -603,6 +603,19 @@ button { font-family: inherit; }
 .lookbook-card .card-photo.placeholder-slot { aspect-ratio: 4 / 5; border-radius: 0; border-width: 0 0 1px 0; }
 .lookbook-card .card-photo:not(.placeholder-slot) { aspect-ratio: 4 / 5; overflow: hidden; border-bottom: 1px solid var(--hairline); background: #000; }
 .lookbook-card .card-photo img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 50%; }
+
+.lookbook-card .card-photo { position: relative; }
+
+.lookbook-card .card-photo::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+  opacity: 0; /* off by default (mobile grid, and desktop before JS marks a card centered) —
+    only the desktop carousel's non-centered cards switch this on, below */
+  transition: opacity 0.4s var(--ease);
+  pointer-events: none;
+}
 .lookbook-card .card-body { padding: 1.4rem 1.5rem 1.7rem; display: flex; flex-direction: column; flex: 1; }
 .lookbook-card h3 {
   font-size: 1.2rem;
@@ -783,11 +796,11 @@ button { font-family: inherit; }
   .card-grid .lookbook-card {
     flex: 0 0 380px;
     scroll-snap-align: center;
-    opacity: 0.5;
     transform: scale(0.94);
-    transition: opacity 0.4s var(--ease), transform 0.4s var(--ease), border-color 0.4s var(--ease), box-shadow 0.4s var(--ease);
+    transition: transform 0.4s var(--ease), border-color 0.4s var(--ease), box-shadow 0.4s var(--ease);
   }
-  .card-grid .lookbook-card.is-centered { opacity: 1; transform: none; border-color: var(--gold); }
+  .card-grid .lookbook-card.is-centered { transform: none; border-color: var(--gold); }
+  .card-grid .lookbook-card:not(.is-centered) .card-photo::after { opacity: 1; }
   .card-grid .lookbook-card:hover { transform: none; }
   .card-grid .lookbook-card.is-centered:hover { box-shadow: 0 18px 40px rgba(0,0,0,0.5); }
 
