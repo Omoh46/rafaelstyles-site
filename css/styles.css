@@ -168,6 +168,8 @@ button { font-family: inherit; }
   align-items: center;
   justify-content: space-between;
   width: 100%;
+  max-width: none;
+  padding: 0 clamp(1.25rem, 4vw, 3rem);
 }
 .nav-brand {
   display: flex;
@@ -351,7 +353,7 @@ button { font-family: inherit; }
   justify-content: center;
   padding: clamp(1.75rem, 3.2vw, 3rem) clamp(1.5rem, 5vw, 4.5rem);
   max-width: 640px;
-  margin-left: auto; /* keeps copy hugging the centre line on very wide screens */
+  margin: 0 auto; /* centers the copy within its black half, balanced on both sides */
   /* Flat black — falls back to .hero's own background. The fabric texture used to live here;
      it left a hard vertical seam where the image cut off against flat black, and has moved to
      the Lookbook Menu's intro block instead. */
