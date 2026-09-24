@@ -802,6 +802,7 @@ button { font-family: inherit; }
   .card-grid .lookbook-card.is-centered { transform: none; border-color: var(--gold); }
   .card-grid .lookbook-card:not(.is-centered) .card-photo::after { opacity: 1; }
   .card-grid .lookbook-card:hover { transform: none; }
+  .card-grid .lookbook-card:not(.is-centered):hover { transform: scale(0.94); }
   .card-grid .lookbook-card.is-centered:hover { box-shadow: 0 18px 40px rgba(0,0,0,0.5); }
 
   .carousel-wrap { position: relative; }
