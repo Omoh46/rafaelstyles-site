@@ -982,11 +982,19 @@ button { font-family: inherit; }
   padding-top: var(--book-track-pad-top);
   display: flex;
   flex-direction: column;
-  /* Vertically centers whichever page is currently resting (in normal flow) in the fixed
-     frame — short divider pages read as a deliberate, spacious title page instead of a box
-     that shrank to fit them. align-items: stretch (the default) keeps .book-unit at its full
-     block width, preserving each template's own internal layout untouched. */
-  justify-content: center;
+  /* flex-start (not center): centering recalculated per page based on that page's own natural
+     height, so the photo/title visibly shifted up or down every time you moved Prev/Next
+     between pages of different heights — the "section adjusts itself" complaint, even though
+     the outer frame itself had already stopped resizing. Content-template pages now anchor to
+     a constant top position (flush after the page-counter padding) and stay at their natural
+     height, so any leftover frame space appears below them, never above, and the photo never
+     moves. Divider-template pages opt back into a centered look via their own explicit height
+     below (data-template="divider"), which fills the whole frame so their EXISTING internal
+     centering (already flex/justify-content: center on that rule) has the full frame to center
+     within — a deliberate, book-like title-page treatment, distinct from photo pages on
+     purpose. align-items: stretch (the default) keeps .book-unit at its full block width,
+     preserving each template's own internal layout untouched. */
+  justify-content: flex-start;
 }
 .book-unit[hidden] { display: none; }
 /* Safety net: if any page's content somehow exceeds the fixed frame (an unusually long future
@@ -1007,17 +1015,17 @@ button { font-family: inherit; }
 }
 /* is-under/is-turning are position: absolute, so they're removed from the flex flow above and
    would otherwise anchor to the track's padding-box top edge (i.e. under the counter pill,
-   top-pinned) regardless of the resting page's flex centering — a visible vertical snap right
-   as a turn starts/ends. top + bottom + margin: auto 0 is the absolute-positioning equivalent
-   of justify-content: center: it centers each page (by its own natural height) within the same
-   content-box region the flex rule above centers the resting page in (top offset by
-   --book-track-pad-top instead of relying on the ancestor's padding, which absolute children
-   don't get pushed by), so the outgoing/incoming page lands at the exact same Y as it would at
-   rest — no jump. */
+   top-pinned) regardless of the resting page's position — a visible vertical snap right as a
+   turn starts/ends. top: var(--book-track-pad-top) (instead of relying on the ancestor's
+   padding, which absolute children don't get pushed by) puts them at the exact same top offset
+   #book-track's flex-start already rests content-template pages at, and height is left auto —
+   so a content page lands at the same Y turning as it does resting, no jump. Divider-template
+   pages get their own explicit height (see data-template="divider" below) that applies
+   regardless of is-under/is-turning, so they still fill the whole frame and center internally
+   the same way turning as resting. */
 .book-unit.is-under {
   position: absolute;
-  top: var(--book-track-pad-top); bottom: 0; left: 0; right: 0;
-  margin: auto 0;
+  top: var(--book-track-pad-top); left: 0; right: 0;
   z-index: 1;
 }
 
@@ -1028,8 +1036,7 @@ button { font-family: inherit; }
    page through the invisible 90deg-270deg arc, which is what reveals .is-under beneath it. */
 .book-unit.is-turning {
   position: absolute;
-  top: var(--book-track-pad-top); bottom: 0; left: 0; right: 0;
-  margin: auto 0;
+  top: var(--book-track-pad-top); left: 0; right: 0;
   z-index: 2;
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
@@ -1119,6 +1126,12 @@ button { font-family: inherit; }
   align-items: center;
   text-align: center;
   min-height: 13rem;
+  /* #book-track is flex-start now (see above), so without an explicit height a divider page
+     would just sit at its own short natural height like a content page — this is what still
+     gives divider pages the full frame to center within, keeping their existing "title page
+     centered in the middle" look. Applies to this selector regardless of is-turning/is-under
+     state (unaffected by :not([hidden]) — that class combo is never hidden while turning). */
+  height: calc(var(--book-track-h) - var(--book-track-pad-top));
 }
 .book-unit[data-template="divider"] h3 { color: var(--gold); font-size: clamp(1.5rem, 4vw, 2rem); margin-bottom: 0; }
 .book-unit[data-template="divider"] .ornament { margin: 1.1rem 0; }
