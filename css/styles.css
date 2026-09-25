@@ -965,12 +965,38 @@ button { font-family: inherit; }
   -webkit-perspective: 1500px;
 }
 .book-track {
+  /* Fixed per breakpoint (mobile override below) instead of auto/min-height, so the frame
+     itself never resizes as pages turn or an accordion opens/closes — only the tallest
+     realistic state (a content page with its longest description expanded) is what it needs
+     to fit; every shorter page just sits centered inside it (see justify-content below).
+     --book-track-h was measured empirically: true max natural page height (photo + copy +
+     open accordion, including the three two-paragraph "note" pages — Tailored Bespoke
+     Accents, Bespoke Tress Liberation, Extended Care) across 320/390/501/560/600/768/900px
+     (mobile) and 901/1024/1280/1920px (desktop) topped out at 511px mobile / 517px desktop;
+     these values give a ~60-80px comfortable margin above that measured max. */
+  --book-track-h: 640px;
+  --book-track-pad-top: 2.5rem; /* clears the page-counter pill floating above */
   position: relative;
   overflow: hidden;
-  min-height: 11.5rem;
-  padding-top: 2.5rem; /* clears the page-counter pill floating above */
+  height: var(--book-track-h);
+  padding-top: var(--book-track-pad-top);
+  display: flex;
+  flex-direction: column;
+  /* Vertically centers whichever page is currently resting (in normal flow) in the fixed
+     frame — short divider pages read as a deliberate, spacious title page instead of a box
+     that shrank to fit them. align-items: stretch (the default) keeps .book-unit at its full
+     block width, preserving each template's own internal layout untouched. */
+  justify-content: center;
 }
 .book-unit[hidden] { display: none; }
+/* Safety net: if any page's content somehow exceeds the fixed frame (an unusually long future
+   description, extreme browser zoom, etc.), it scrolls internally instead of clipping or
+   growing the frame. calc() (not a % max-height) so it resolves identically for the normal-flow
+   resting page and the position: absolute is-turning/is-under pages below. */
+.book-unit {
+  max-height: calc(var(--book-track-h) - var(--book-track-pad-top));
+  overflow-y: auto;
+}
 
 /* The page underneath: sits flat, no rotation, revealed once the turning page's
    backface hides past 90°. */
@@ -979,10 +1005,19 @@ button { font-family: inherit; }
   background: #0a0705; /* opaque "paper" — without this the stacked layer beneath shows through
     in every gap between glyphs, since both sit at the exact same position during the turn */
 }
+/* is-under/is-turning are position: absolute, so they're removed from the flex flow above and
+   would otherwise anchor to the track's padding-box top edge (i.e. under the counter pill,
+   top-pinned) regardless of the resting page's flex centering — a visible vertical snap right
+   as a turn starts/ends. top + bottom + margin: auto 0 is the absolute-positioning equivalent
+   of justify-content: center: it centers each page (by its own natural height) within the same
+   content-box region the flex rule above centers the resting page in (top offset by
+   --book-track-pad-top instead of relying on the ancestor's padding, which absolute children
+   don't get pushed by), so the outgoing/incoming page lands at the exact same Y as it would at
+   rest — no jump. */
 .book-unit.is-under {
   position: absolute;
-  top: 0; left: 0; right: 0;
-  padding-top: 2.5rem;
+  top: var(--book-track-pad-top); bottom: 0; left: 0; right: 0;
+  margin: auto 0;
   z-index: 1;
 }
 
@@ -993,8 +1028,8 @@ button { font-family: inherit; }
    page through the invisible 90deg-270deg arc, which is what reveals .is-under beneath it. */
 .book-unit.is-turning {
   position: absolute;
-  top: 0; left: 0; right: 0;
-  padding-top: 2.5rem;
+  top: var(--book-track-pad-top); bottom: 0; left: 0; right: 0;
+  margin: auto 0;
   z-index: 2;
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
@@ -1197,6 +1232,12 @@ button { font-family: inherit; }
 
 /* ---------- Flip-book surface: mobile only (desktop rules above are untouched) ---------- */
 @media (max-width: 900px) {
+  /* Own fixed frame height for this breakpoint: measured max natural page height at mobile
+     widths (320/390/501/560/600/768/900px) topped out at 511px (.book-reader's width caps at
+     560px, so text reflow — and thus page height — barely differs from desktop above ~560px;
+     this value is intentionally close to the desktop one for that reason), plus a comfortable
+     margin. See the --book-track-h comment on .book-track above for the full measurement note. */
+  .book-track { --book-track-h: 620px; }
   /* Brighter, more vibrant velvet + gold, closer to the hero photo's tone */
   .flipbook-tray::before {
     background-attachment: scroll; /* `fixed` has known rendering quirks on some mobile browsers

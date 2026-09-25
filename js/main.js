@@ -283,8 +283,13 @@
       var under = dir === 1 ? incoming : outgoing;
       var turnClass = dir === 1 ? "turn-fwd" : "turn-back";
 
-      /* Big enough to hold whichever of the two pages is taller, so neither clips mid-turn. */
-      track.style.height = Math.max(outgoing.scrollHeight, incoming.scrollHeight) + "px";
+      /* #book-track has a fixed CSS height (see styles.css) sized to comfortably fit the
+         tallest realistic page, so there's no longer a need to size the track to whichever of
+         the two pages is taller — every page fits inside the fixed frame already. Setting an
+         inline height here would actively fight that fix: it would shrink the track (to at
+         most ~517px) below the fixed frame (640px/620px) for the duration of every turn, then
+         snap back once cleared below, reintroducing the exact "frame resizes" bug this was
+         meant to prevent. */
 
       incoming.hidden = false;
       under.classList.add("is-under");
@@ -295,7 +300,6 @@
         closeUnitAccordion(outgoing);
         settle(outgoing);
         settle(incoming);
-        track.style.height = "";
         animating = false;
         turning.removeEventListener("animationend", finish);
       };
@@ -320,7 +324,6 @@
       reader.hidden = false;
       page = 0;
       units.forEach(function (u, i) { u.hidden = i !== 0; settle(u); closeUnitAccordion(u); });
-      track.style.height = "";
       counter.textContent = "01";
       navCurrent.textContent = "01";
       describe(0);
